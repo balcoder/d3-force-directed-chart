@@ -75,7 +75,7 @@ const simulation = d3.forceSimulation()
 //we're going to add a charge to each node
 //also going to add a centering force
 simulation
-    .force("charge_force", d3.forceManyBody([-1200]))
+    .force("charge_force", d3.forceManyBody())
     .force("center_force", d3.forceCenter(width / 2, height / 2));
 
 //Function to choose what flag we have
@@ -88,13 +88,14 @@ simulation
 // }
 
 //draw circles for the nodes
-const node = svg.append("g")        
+const node = svg.append("g")
         .selectAll("image")
         .data(data.nodes)
         .enter()
-        .append("svg:image")
-        .attr("class", function(d) { return `flags ${d.code}`})
-        .attr("xlink:href", "resources/images/check.png")
+        .append("image")
+        //.append("img")
+        .attr("class", function(d) { return `flag flag-${d.code}`})
+        .attr("xlink:src", "/dist/images/blank.gif")
 
 
 //Function to choose the line colour and thickness
@@ -122,8 +123,8 @@ const link = svg.append("g")
 // and update the link positions
 function tickActions() {
     node
-        .attr("cx", (d) =>  d.x )
-        .attr("cy", (d) =>  d.y )
+        .attr("x", (d) =>  d.x )
+        .attr("y", (d) =>  d.y )
 
 
   //update link positions
