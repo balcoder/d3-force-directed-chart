@@ -1,19 +1,50 @@
-@import 'variables';
-@import 'utilities';
 
-body {
-  background-color: $color-teal-base;
-  color: $color-text;
+//****************************************************************************//
+//*******************************flagV4.js************************************//
+
+h1 {
+	text-align: center;
 }
 
-
-
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
+.flag {
+	position: absolute;
 }
 
-.nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
+.flagbox {
+	position: absolute;
 }
+
+#tooltip {
+	display: none;
+	padding: 3px;
+	border-radius: 2px;
+	box-shadow: -2px 2px 10px black;
+	z-index: 1;
+	position: absolute;
+	background-color: white;
+}
+
+.graph {
+	width: 1000px;
+	height: 800px;
+	margin: auto;
+	box-shadow: -3px 3px 20px black;
+	background-color: black;
+}
+
+.link {
+	stroke-width: 1px;
+	stroke: #CCC;
+}
+// //****************************************************************************//
+// //****************************playGround.js***********************************//
+// .node {
+//     fill: #ccc;
+//     stroke: #fff;
+//     stroke-width: 2px;
+// }
+//
+// .link {
+//     stroke: #777;
+//     stroke-width: 2px;
+// }
