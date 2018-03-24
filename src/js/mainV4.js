@@ -11,14 +11,12 @@ const url = "https://raw.githubusercontent.com/DealPete/forceDirected/master/cou
 d3.json(url, (error, json) => {
   if(error) return ("Problem loading json data: " + error);
 
-  drawChart(json);
-})
 
 
-const drawChart = function(json) {
 
   var simulation = d3.forceSimulation()
                 .nodes(json.nodes)
+                //.links(json.links)
                 .force("charge_force", d3.forceManyBody())
                 .force("center_force", d3.forceCenter(width / 2, height/2 ));
 
@@ -32,12 +30,7 @@ const drawChart = function(json) {
           .attr("r", 5)
           .attr("fill", "red");
 
-  function tickActions() {
-      //update circle positions to reflect node updates on each tick of the simulation
-      node
-          .attr("cx", function(d) { return d.x; })
-          .attr("cy", function(d) { return d.y; })
-    }
+
   //apply our function tickActions() on every tick
   simulation.on("tick", tickActions );
 
@@ -71,6 +64,5 @@ function tickActions() {
         .attr("y1", function(d) { return d.source.y; })
         .attr("x2", function(d) { return d.target.x; })
         .attr("y2", function(d) { return d.target.y; });
-
-  }
-};
+    }
+  });
