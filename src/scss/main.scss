@@ -2,9 +2,6 @@
 //****************************************************************************//
 //*******************************flagV4.js************************************//
 
-h1 {
-	text-align: center;
-}
 
 .flag {
 	position: absolute;
@@ -24,27 +21,12 @@ h1 {
 	background-color: white;
 }
 
-.graph {
-	width: 1000px;
-	height: 800px;
-	margin: auto;
-	box-shadow: -3px 3px 20px black;
-	background-color: black;
+.links line {
+  stroke: #999;
+  stroke-opacity: 0.6;
 }
 
-.link {
-	stroke-width: 1px;
-	stroke: #CCC;
+.nodes circle {
+  stroke: #fff;
+  stroke-width: 1.5px;
 }
-// //****************************************************************************//
-// //****************************playGround.js***********************************//
-// .node {
-//     fill: #ccc;
-//     stroke: #fff;
-//     stroke-width: 2px;
-// }
-//
-// .link {
-//     stroke: #777;
-//     stroke-width: 2px;
-// }
