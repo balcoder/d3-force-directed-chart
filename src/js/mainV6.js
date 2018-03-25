@@ -10,7 +10,7 @@ const svg = graph.append('svg')
 	        .attr("height", height);
 
 var force = d3.forceSimulation()
-            .force("charge", d3.forceManyBody().strength(-700).distanceMin(100).distanceMax(1000))
+            .force("charge", d3.forceManyBody().strength(-300).distanceMin(10).distanceMax(100))
             .force("link", d3.forceLink().id(function(d) { return d.index }))
             .force("center", d3.forceCenter(width / 2, height / 2))
             .force("y", d3.forceY(0.001))
@@ -55,16 +55,16 @@ d3.json(url, function(error, json){
             .on("end", dragended));
 
         node.append('circle')
-            .attr('r', 13)
+            .attr('r', 5)
             .attr('fill', "black");
 
         node.append("text")
             .attr("dx", -18)
-            .attr("dy", 8)
-            .style("font-family", "overwatch")
-            .style("font-size", "18px")
+            .attr("dy", 18)
+            .style("font-family", "'Slabo 27px', serif")
+            .style("font-size", "10px")
             .text(function (d) {
-                return d.name
+                return d.country
             });
 
         force.on("tick", function () {
