@@ -3,30 +3,39 @@
 //*******************************flagV4.js************************************//
 
 
-.flag {
-	position: absolute;
-}
+// .flag {
+// 	position: absolute;
+// }
+//
+// .flagbox {
+// 	position: absolute;
+// }
+//
+// #tooltip {
+// 	display: none;
+// 	padding: 3px;
+// 	border-radius: 2px;
+// 	box-shadow: -2px 2px 10px black;
+// 	z-index: 1;
+// 	position: absolute;
+// 	background-color: white;
+// }
+//
+// .links line {
+//   stroke: #999;
+//   stroke-opacity: 0.6;
+// }
+//
+// .nodes circle {
+//   stroke: #fff;
+//   stroke-width: 1.5px;
+// }
 
-.flagbox {
-	position: absolute;
-}
+.link {
+        stroke: #ccc;
+    }
 
-#tooltip {
-	display: none;
-	padding: 3px;
-	border-radius: 2px;
-	box-shadow: -2px 2px 10px black;
-	z-index: 1;
-	position: absolute;
-	background-color: white;
-}
-
-.links line {
-  stroke: #999;
-  stroke-opacity: 0.6;
-}
-
-.nodes circle {
-  stroke: #fff;
-  stroke-width: 1.5px;
-}
+    .node text {
+        pointer-events: none;
+        font: 10px sans-serif;
+    }
