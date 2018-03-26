@@ -1,81 +1,90 @@
-// Define the dimensions
-var width = 640,
-    height = 480;
+const width = 960,
+      height = 600;
+
+const url = "https://raw.githubusercontent.com/DealPete/forceDirected/master/countries.json";
+
+const graph = d3.select('#container');
+
+const svg = graph.append('svg')
+	        .attr("width", width)
+	        .attr("height", height);
+
+var force = d3.forceSimulation()
+            .force("charge", d3.forceManyBody())
+            //.strength(-700).distanceMin(20).distanceMax(50))
+            .force("link", d3.forceLink().id(function(d) { return d.index }))
+            .force("center", d3.forceCenter(width / 2, height / 2))
+            .force("y", d3.forceY(0.001))
+            .force("x", d3.forceX(0.001))
+
+function dragstarted(d) {
+    if (!d3.event.active) force.alphaTarget(0.5).restart();
+    d.fx = d.x;
+    d.fy = d.y;
+}
+
+function dragged(d) {
+    d.fx = d3.event.x;
+    d.fy = d3.event.y;
+}
+
+function dragended(d) {
+    if (!d3.event.active) force.alphaTarget(0.5);
+    d.fx = null;
+    d.fy = null;
+}
+
+d3.json(url, function(error, json){
+  if (error) throw error;
+
+        force.nodes(json.nodes)
+             .force("link").links(json.links)
+
+        var link = svg.selectAll(".link")
+            .data(json.links)
+            .enter()
+            .append("line")
+            .attr("class", "link");
+
+            var node = graph.select(".flag-holder").selectAll(".node")
+                .data(json.nodes)
+                .enter().append("img")
+                .attr('class', d => 'flag flag-' + d.code)
+                .styel("left" (d) => (d.x -8) + px)
+                .styel("top" (d) => (d.y - 5) + px)
+                .call(d3.drag()
+                .on("start", dragstarted)
+                .on("drag", dragged)
+                .on("end", dragended));
 
 
-// data
-var nodes = [
-  { x:   width/3, y: height/2 },
-  { x: 2*width/3, y: height/2 }
-];
-var links = [
-  { source: 0, target: 1 }
-];
+        // node.append('img')
+        //     .attr('class', d => 'flag flag-' + d.code)
 
-var url = "https://raw.githubusercontent.com/DealPete/forceDirected/master/countries.json";
+        node.append("text")
+            .attr("dx", -18)
+            .attr("dy", 18)
+            .style("font-family", "'Slabo 27px', serif")
+            .style("font-size", "10px")
+            .text(function (d) {
+                return d.country
+            });
 
-d3.json(url, (error, data) => {
-//add svg to body
-var svg = d3.select('body').append('svg')
-  .attr('width', width)
-  .attr('height', height);
-
-
-  // Now we create a force layout object and define its properties.
-  // Those include the dimensions of the visualization and the arrays
-  // of nodes and links.
-  var force = d3.layout.force()
-      .size([width, height])
-      .nodes(data.nodes)
-      .links(data.links);
-
-// add distince between nodes
-force.linkDistance(15);
-
-//add empty nodes and links to the svg with links first so nodes appear on top of
-//links
-var link = svg.selectAll('.link')
-    .data(data.links)
-    .enter().append('line')
-    .attr('class', 'link');
-
-var node = svg.selectAll('.node')
-    .data(data.nodes)
-    .enter().append('circle')
-    .attr('class', 'node');
-
-force.on('end', function() {
-  // When this function executes, the force layout
-      // calculations have concluded. The layout will
-      // have set various properties in our nodes and
-      // links objects that we can use to position them
-      // within the SVG container.
-
-      // First let's reposition the nodes. As the force
-      // layout runs it updates the `x` and `y` properties
-      // that define where the node should be centered.
-      // To move the node, we set the appropriate SVG
-      // attributes to their new values. We also have to
-      // give the node a non-zero radius so that it's visible
-      // in the container.
-      node.attr('r',5)
-       .attr('cx', function(d) { return d.x; })
-       .attr('cy', function(d) { return d.y; });
-
-   // We also need to update positions of the links.
-   // For those elements, the force layout sets the
-   // `source` and `target` properties, specifying
-   // `x` and `y` values in each case.
-
-   link.attr('x1', function(d) { return d.source.x; })
-       .attr('y1', function(d) { return d.source.y; })
-       .attr('x2', function(d) { return d.target.x; })
-       .attr('y2', function(d) { return d.target.y; });
-
-});
-
-// Okay, everything is set up now so it's time to turn
-// things over to the force layout. Here we go.
-
-force.start();
-});
+        force.on("tick", function () {
+            link.attr("x1", function (d) {
+                    return d.source.x;
+                })
+                .attr("y1", function (d) {
+                    return d.source.y;
+                })
+                .attr("x2", function (d) {
+                    return d.target.x;
+                })
+                .attr("y2", function (d) {
+                    return d.target.y;
+                });
+            node.attr("transform", function (d) {
+                return "translate(" + d.x + "," + d.y + ")";
+            });
+        });
+  });

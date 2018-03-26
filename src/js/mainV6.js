@@ -10,7 +10,8 @@ const svg = graph.append('svg')
 	        .attr("height", height);
 
 var force = d3.forceSimulation()
-            .force("charge", d3.forceManyBody().strength(-300).distanceMin(10).distanceMax(100))
+            .force("charge", d3.forceManyBody())
+            //.strength(-700).distanceMin(20).distanceMax(50))
             .force("link", d3.forceLink().id(function(d) { return d.index }))
             .force("center", d3.forceCenter(width / 2, height / 2))
             .force("y", d3.forceY(0.001))
@@ -80,8 +81,10 @@ d3.json(url, function(error, json){
                 .attr("y2", function (d) {
                     return d.target.y;
                 });
-            node.attr("transform", function (d) {
-                return "translate(" + d.x + "," + d.y + ")";
-            });
+            // node.attr("transform", function (d) {
+            //     return "translate(" + d.x + "," + d.y + ")";
+            // });
+            node.style('left', d => (d.x - 8) + "px")
+                .style('top', d => (d.y - 5) + "px");
         });
   });
