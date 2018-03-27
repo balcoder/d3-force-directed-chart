@@ -7,7 +7,8 @@ const graph = d3.select('#container');
 
 const svg = graph.append('svg')
 	        .attr("width", width)
-	        .attr("height", height);
+	        .attr("height", height)
+
 
 var force = d3.forceSimulation()
             .force("charge", d3.forceManyBody())
@@ -50,8 +51,6 @@ d3.json(url, function(error, json){
                 .data(json.nodes)
                 .enter().append("img")
                 .attr('class', d => 'flag flag-' + d.code)
-                .styel("left" (d) => (d.x -8) + px)
-                .styel("top" (d) => (d.y - 5) + px)
                 .call(d3.drag()
                 .on("start", dragstarted)
                 .on("drag", dragged)
@@ -60,6 +59,18 @@ d3.json(url, function(error, json){
 
         // node.append('img')
         //     .attr('class', d => 'flag flag-' + d.code)
+
+        // var node = svg.selectAll(".node")
+        //     .data(json.nodes)
+        //     .enter().append("g")
+        //     .attr("class", "node")
+        //     .call(d3.drag()
+        //     .on("start", dragstarted)
+        //     .on("drag", dragged)
+        //     .on("end", dragended));
+        //
+        // node.append('image')
+        //     .attr('class', d => 'flag flag-' + d.code);
 
         node.append("text")
             .attr("dx", -18)
@@ -83,8 +94,8 @@ d3.json(url, function(error, json){
                 .attr("y2", function (d) {
                     return d.target.y;
                 });
-            node.attr("transform", function (d) {
-                return "translate(" + d.x + "," + d.y + ")";
-            });
+            node.style('left', d => (d.x - 8) + "px")
+			          .style('top', d => (d.y - 5) + "px");
+            
         });
   });
