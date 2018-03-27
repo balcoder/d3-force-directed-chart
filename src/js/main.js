@@ -1,9 +1,9 @@
-const width = 960,
+const width = 900,
       height = 600;
 
 const url = "https://raw.githubusercontent.com/DealPete/forceDirected/master/countries.json";
 
-const graph = d3.select('#container');
+const graph = d3.select('#graph');
 
 const svg = graph.append('svg')
 	        .attr("width", width)
@@ -47,30 +47,14 @@ d3.json(url, function(error, json){
             .append("line")
             .attr("class", "link");
 
-            var node = graph.select(".flag-holder").selectAll(".node")
-                .data(json.nodes)
-                .enter().append("img")
-                .attr('class', d => 'flag flag-' + d.code)
-                .call(d3.drag()
-                .on("start", dragstarted)
-                .on("drag", dragged)
-                .on("end", dragended));
-
-
-        // node.append('img')
-        //     .attr('class', d => 'flag flag-' + d.code)
-
-        // var node = svg.selectAll(".node")
-        //     .data(json.nodes)
-        //     .enter().append("g")
-        //     .attr("class", "node")
-        //     .call(d3.drag()
-        //     .on("start", dragstarted)
-        //     .on("drag", dragged)
-        //     .on("end", dragended));
-        //
-        // node.append('image')
-        //     .attr('class', d => 'flag flag-' + d.code);
+        var node = graph.select(".flag-holder").selectAll(".node")
+            .data(json.nodes)
+            .enter().append("img")
+            .attr('class', d => 'flag flag-' + d.code)
+            .call(d3.drag()
+            .on("start", dragstarted)
+            .on("drag", dragged)
+            .on("end", dragended));
 
         node.append("text")
             .attr("dx", -18)
@@ -96,6 +80,6 @@ d3.json(url, function(error, json){
                 });
             node.style('left', d => (d.x - 8) + "px")
 			          .style('top', d => (d.y - 5) + "px");
-            
+
         });
   });
