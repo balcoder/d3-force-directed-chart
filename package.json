@@ -1,12 +1,12 @@
 {
-  "name": "npm-babel-prettier",
+  "name": "D3 National Contiguity",
   "version": "1.0.0",
-  "description": "Some common build tasks written with npm scripts.",
+  "description": "Show National Contiguity with a Force Directed Graph.",
   "author": "Des Barrett",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/balcoder/npm-babel-prettier"
+    "url": "https://github.com/balcoder/d3-force-directed-chart.git"
   },
   "keywords": [
     "npm",
