@@ -1,15 +1,18 @@
+//D3 Force Directed graph
+
 const width = 900,
       height = 600;
-
+// json data
 const url = "https://raw.githubusercontent.com/DealPete/forceDirected/master/countries.json";
 
 const graph = d3.select('#graph');
 
+// append an svg with our dimensions to the graph selection
 const svg = graph.append('svg')
 	        .attr("width", width)
 	        .attr("height", height)
 
-
+// create a new simulation
 var force = d3.forceSimulation()
             .force("charge", d3.forceManyBody())
             //.strength(-700).distanceMin(20).distanceMax(50))
@@ -41,12 +44,16 @@ d3.json(url, function(error, json){
         force.nodes(json.nodes)
              .force("link").links(json.links)
 
+// The `links` array contains objects with a `source` and a `target`
+// property. The values of those properties are the indices in
+// the `nodes` array of the two endpoints of the link.
         var link = svg.selectAll(".link")
             .data(json.links)
             .enter()
             .append("line")
             .attr("class", "link");
 
+// add an img per node via the graph selection
         var node = graph.select(".flag-holder").selectAll(".node")
             .data(json.nodes)
             .enter().append("img")
@@ -64,7 +71,7 @@ d3.json(url, function(error, json){
             .text(function (d) {
                 return d.country
             });
-
+//use simulation.on to listen for tick events as the simulation runs
         force.on("tick", function () {
             link.attr("x1", function (d) {
                     return d.source.x;
@@ -78,6 +85,7 @@ d3.json(url, function(error, json){
                 .attr("y2", function (d) {
                     return d.target.y;
                 });
+// on each tick of the d3 graph add the style left and top for img
             node.style('left', d => (d.x - 8) + "px")
 			          .style('top', d => (d.y - 5) + "px");
 
